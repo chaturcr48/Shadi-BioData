@@ -21,15 +21,15 @@ export function TemplateGallery({ category, templates, selectedId, onSelect, onF
     <section className="mx-auto max-w-6xl px-4 py-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-xl font-bold text-stone-950">Choose a design template</h2>
-          <p className="text-sm text-stone-600">{categoryTemplates.length} printable A4 templates in this category.</p>
+          <h2 className="font-serif text-xl font-bold text-[#221816]">Choose a design template</h2>
+          <p className="text-sm text-[#7d6f5c]">{categoryTemplates.length} printable A4 templates in this category.</p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="inline-flex rounded-md border border-stone-300 bg-white p-1 shadow-sm">
+          <div className="inline-flex rounded-md border border-[#e6d3aa] bg-[#fffdf7] p-1 shadow-sm">
             <button
               type="button"
               className={`inline-flex h-9 w-9 items-center justify-center rounded ${
-                viewMode === "grid" ? "bg-amber-100 text-amber-800" : "text-stone-600 hover:bg-stone-100"
+                viewMode === "grid" ? "bg-[#f4ecd8] text-[#8b2b34]" : "text-[#7d6f5c] hover:bg-[#f8f1e4]"
               }`}
               aria-label="Grid view"
               title="Grid view"
@@ -40,7 +40,7 @@ export function TemplateGallery({ category, templates, selectedId, onSelect, onF
             <button
               type="button"
               className={`inline-flex h-9 w-9 items-center justify-center rounded ${
-                viewMode === "list" ? "bg-amber-100 text-amber-800" : "text-stone-600 hover:bg-stone-100"
+                viewMode === "list" ? "bg-[#f4ecd8] text-[#8b2b34]" : "text-[#7d6f5c] hover:bg-[#f8f1e4]"
               }`}
               aria-label="List view"
               title="List view"
@@ -49,7 +49,7 @@ export function TemplateGallery({ category, templates, selectedId, onSelect, onF
               <List size={19} />
             </button>
           </div>
-          <LayoutTemplate className="hidden text-amber-700 sm:block" size={28} />
+          <LayoutTemplate className="hidden text-[#c0a04e] sm:block" size={28} />
         </div>
       </div>
       <div className={viewMode === "grid" ? "grid gap-4 sm:grid-cols-2 lg:grid-cols-3" : "grid gap-4"}>
@@ -69,8 +69,8 @@ export function TemplateGallery({ category, templates, selectedId, onSelect, onF
                   onSelect(template.id);
                 }
               }}
-              className={`cursor-pointer overflow-hidden rounded-lg border bg-white text-left shadow-sm transition hover:shadow-soft ${
-                isSelected ? "border-amber-500 ring-2 ring-amber-200" : "border-stone-200"
+              className={`corner-card cursor-pointer overflow-hidden text-left transition hover:-translate-y-1 hover:shadow-soft ${
+                isSelected ? "template-card-selected border-[#8b2b34]" : "border-[#ead7ac]"
               } ${viewMode === "list" ? "sm:grid sm:grid-cols-[260px_1fr]" : ""}`}
             >
               <div
@@ -93,12 +93,12 @@ export function TemplateGallery({ category, templates, selectedId, onSelect, onF
               <div className="p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h3 className="font-bold text-stone-950">{template.name}</h3>
-                    <p className="mt-1 text-sm leading-5 text-stone-600">{template.description}</p>
+                    <h3 className="font-serif text-base font-bold text-[#221816]">{template.name}</h3>
+                    <p className="mt-1 text-sm leading-5 text-[#7d6f5c]">{template.description}</p>
                   </div>
-                  {isSelected ? <Check className="shrink-0 text-amber-700" size={20} /> : null}
+                  {isSelected ? <Check className="shrink-0 text-[#8b2b34]" size={20} /> : null}
                 </div>
-                <p className="mt-3 text-xs uppercase tracking-wide text-stone-500">
+                <p className="mt-3 text-xs uppercase tracking-[0.18em] text-[#b79a4d]">
                   {template.layout} / {template.headingStyle}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">

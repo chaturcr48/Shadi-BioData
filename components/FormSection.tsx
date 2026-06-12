@@ -34,10 +34,10 @@ export function FormSection({
   const sectionCustomFields = customFields.filter((field) => field.section === section);
 
   return (
-    <div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm sm:p-6">
-      <div className="mb-5 flex items-center justify-between gap-3">
-        <h2 className="text-lg font-bold text-stone-950">{title}</h2>
-        <span className="rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold text-stone-600">
+    <div className="corner-card overflow-hidden p-4 sm:p-6">
+      <div className="mb-6 flex items-center justify-between gap-3 border-t-4 border-[#8b2b34] pt-5">
+        <h2 className="ornament-title text-[#c0a04e]">{title}</h2>
+        <span className="rounded-full bg-[#f4ecd8] px-3 py-1 text-xs font-semibold text-[#7d6f5c]">
           Optional fields
         </span>
       </div>

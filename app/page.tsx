@@ -10,7 +10,7 @@ import { TemplateGallery } from "@/components/TemplateGallery";
 import { allTemplates } from "@/templates";
 import type { BiodataCategory, BiodataFormData, BiodataTemplate } from "@/types/biodata";
 import { defaultSectionOrder } from "@/utils/fields";
-import { ChevronLeft, FileText, X } from "lucide-react";
+import { ArrowRight, Check, ChevronLeft, Eye, Sparkles, X } from "lucide-react";
 import { useMemo, useState } from "react";
 
 type AppStep = "category" | "template" | "form" | "preview";
@@ -118,6 +118,269 @@ function createSampleData(category: BiodataCategory, templateId: string): Biodat
   };
 }
 
+function BrandLogo() {
+  return (
+    <span className="brand-lockup">
+      <span className="brand-lotus" aria-hidden="true">
+        <span className="lotus-petal lotus-petal-left" />
+        <span className="lotus-petal lotus-petal-center-left" />
+        <span className="lotus-petal lotus-petal-center" />
+        <span className="lotus-petal lotus-petal-center-right" />
+        <span className="lotus-petal lotus-petal-right" />
+        <span className="lotus-stem" />
+      </span>
+      <span className="brand-wordmark">
+        <span className="brand-name">Shadi BioData</span>
+        <span className="brand-rule">
+          <span className="brand-rule-dot" />
+          <span className="brand-rule-line" />
+          <span className="brand-rule-ornament" />
+          <span className="brand-rule-line" />
+          <span className="brand-rule-dot" />
+        </span>
+      </span>
+    </span>
+  );
+}
+
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="section-eyebrow">
+      <span className="section-eyebrow-row">
+        <span />
+        <Sparkles size={18} />
+        <span />
+      </span>
+      <strong>{children}</strong>
+      <span className="section-eyebrow-row">
+        <span />
+        <Sparkles size={18} />
+        <span />
+      </span>
+    </div>
+  );
+}
+
+function MiniBiodataCard() {
+  const rows = [
+    ["Date of Birth", "15 March 1997"],
+    ["Height", "5'4\""],
+    ["Education", "B.Tech, Delhi University"],
+    ["Profession", "Software Engineer"],
+    ["Religion", "Hindu - Brahmin"],
+    ["City", "New Delhi"]
+  ];
+
+  return (
+    <div className="hero-preview-card">
+      <div className="hero-preview-paper">
+        <div className="hero-preview-flower">*</div>
+        <h3>Priya Sharma</h3>
+        <p>Marriage Bio-Data</p>
+        <div className="ornamental-divider"><span />*<span /></div>
+        <dl>
+          {rows.map(([label, value]) => (
+            <div key={label}>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+        <div className="ornamental-divider"><span />*<span /></div>
+        <p className="hero-preview-contact">Contact: +91 98765 43210</p>
+      </div>
+    </div>
+  );
+}
+
+interface LandingHomeProps {
+  category: BiodataCategory;
+  onCategorySelect: (category: BiodataCategory) => void;
+  onStartCreate: () => void;
+  onOpenPopularTemplates: () => void;
+  onOpenAllTemplates: () => void;
+  onPreviewTemplate: (template: BiodataTemplate) => void;
+  onUseTemplate: (template: BiodataTemplate) => void;
+}
+
+function LandingHome({
+  category,
+  onCategorySelect,
+  onStartCreate,
+  onOpenPopularTemplates,
+  onOpenAllTemplates,
+  onPreviewTemplate,
+  onUseTemplate
+}: LandingHomeProps) {
+  const popularTemplateIds = ["hindu-1", "hindu-4", "muslim-3", "sikh-6", "christian-10", "general-14"];
+  const popularTemplates = popularTemplateIds
+    .map((id) => allTemplates.find((template) => template.id === id))
+    .filter((template): template is BiodataTemplate => Boolean(template));
+
+  return (
+    <>
+      <section className="hero-section" id="home">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-10 lg:grid-cols-[1.08fr_0.92fr] lg:py-16">
+          <div>
+            <SectionEyebrow>Matrimonial Bio-Data Maker</SectionEyebrow>
+            <h2 className="hero-title">
+              Create Your <span>Perfect</span> Marriage Bio-Data
+            </h2>
+            <p className="hero-copy">
+              Create a clean, professional marriage bio-data in minutes. Choose a template, fill your details,
+              preview it, and download a print-ready PDF.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <button type="button" className="btn-primary btn-large" onClick={onStartCreate}>
+                Create Bio-Data Free <ArrowRight size={19} />
+              </button>
+              <button type="button" className="link-button" onClick={onOpenPopularTemplates}>
+                Browse Popular Templates
+              </button>
+            </div>
+            <div className="hero-stats">
+              <div><strong>10,000+</strong><span>Bio-datas created</span></div>
+              <div><strong>75+</strong><span>Elegant templates</span></div>
+              <div><strong>Free</strong><span>PDF download</span></div>
+            </div>
+          </div>
+          <div className="hero-visual">
+            <MiniBiodataCard />
+          </div>
+        </div>
+      </section>
+
+      <section className="landing-band" id="create">
+        <div className="mx-auto max-w-6xl px-4 py-12">
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionEyebrow>Start Here</SectionEyebrow>
+            <h2 className="section-title">Choose Your Bio-Data Category</h2>
+            <p className="section-copy">Select the format that fits your family, culture, and community details.</p>
+          </div>
+          <CategorySelector selected={category} onSelect={onCategorySelect} />
+        </div>
+      </section>
+
+      <section className="process-section" id="how-it-works">
+        <div className="mx-auto max-w-6xl px-4 py-14">
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionEyebrow>Simple Process</SectionEyebrow>
+            <h2 className="section-title">Choose template {'->'} Fill your details {'->'} Download as PDF</h2>
+          </div>
+          <div className="process-grid">
+            {[
+              ["01", "Choose a Template", "Start with your category, then browse elegant bio-data templates and pick your favourite."],
+              ["02", "Fill Your Details", "Enter your personal, family, education, career, and contact information in a guided form."],
+              ["03", "Download as PDF", "Preview your bio-data and download a beautifully formatted, print-ready PDF instantly."]
+            ].map(([number, title, copy]) => (
+              <article key={number} className="process-card">
+                <span>{number}</span>
+                <h3>{title}</h3>
+                <p>{copy}</p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-10 flex justify-center">
+            <button type="button" className="btn-primary btn-large" onClick={onStartCreate}>
+              Start Creating Now <ArrowRight size={19} />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="featured-section" id="popular-templates">
+        <div className="mx-auto max-w-6xl px-4 py-14">
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionEyebrow>Popular Templates</SectionEyebrow>
+            <h2 className="section-title">Popular Bio-Data Templates</h2>
+            <p className="section-copy">A quick look at some of the most useful designs from our existing template collection.</p>
+          </div>
+          <div className="featured-grid">
+            {popularTemplates.map((template) => (
+              <article key={template.id} className="featured-template" style={{ background: template.theme.background }}>
+                <div style={{ border: template.borderStyle }}>
+                  <h3>{template.name.replace(/^(Hindu|Muslim|Sikh|Christian|General)\s/, "")}</h3>
+                  <p>{template.layout} layout</p>
+                  <div className="featured-actions">
+                    <button
+                      type="button"
+                      className="featured-preview-button"
+                      onClick={() => onPreviewTemplate(template)}
+                      aria-label={`Preview ${template.name}`}
+                      title="Preview"
+                    >
+                      <Eye size={18} />
+                    </button>
+                    <button type="button" className="featured-select-button" onClick={() => onUseTemplate(template)}>
+                      Select and fill <Check size={17} />
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <button type="button" className="link-button" onClick={onOpenAllTemplates}>
+              View all templates {'->'}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="testimonials-section">
+        <div className="mx-auto max-w-6xl px-4 py-14">
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionEyebrow>Families Love Us</SectionEyebrow>
+            <h2 className="section-title">Trusted by Thousands of Families</h2>
+          </div>
+          <div className="testimonial-grid">
+            {[
+              ["Sunita Agarwal", "Jaipur, Rajasthan", "We created our daughter's bio-data in just 10 minutes. The templates are so beautiful and everyone loved the final PDF."],
+              ["Ramesh Iyer", "Chennai, Tamil Nadu", "Very easy to use and the PDF quality is excellent. We printed copies and they looked absolutely professional."],
+              ["Meena Kapoor", "Lucknow, Uttar Pradesh", "The designs feel like a proper wedding invitation. My son's bio-data received so many compliments."]
+            ].map(([name, city, quote]) => (
+              <article key={name} className="testimonial-card">
+                <div className="stars">5/5 rating</div>
+                <p>"{quote}"</p>
+                <strong>{name}</strong>
+                <span>{city}</span>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <FooterCta onCreate={onStartCreate} />
+    </>
+  );
+}
+
+function FooterCta({ onCreate }: { onCreate: () => void }) {
+  return (
+    <footer className="site-footer">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 lg:grid-cols-[1.1fr_0.9fr_0.9fr]">
+        <div>
+          <BrandLogo />
+          <p>Create beautiful, professional marriage bio-datas in minutes. Private, browser-only, and ready for PDF download.</p>
+        </div>
+        <div>
+          <h3>Quick Links</h3>
+          <button type="button" onClick={onCreate}>Create Bio-Data</button>
+          <a href="#popular-templates">Popular Templates</a>
+          <a href="#how-it-works">How It Works</a>
+        </div>
+        <div>
+          <h3>Get Started Today</h3>
+          <p>Your perfect bio-data is just minutes away.</p>
+          <button type="button" className="btn-primary" onClick={onCreate}>
+            Create Bio-Data Free <ArrowRight size={18} />
+          </button>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 export default function Home() {
   const [step, setStep] = useState<AppStep>("category");
   const [data, setData] = useState<BiodataFormData>(() => createInitialData());
@@ -140,6 +403,26 @@ export default function Home() {
     }));
   }
 
+  function chooseCategoryAndOpenTemplates(category: BiodataCategory) {
+    setCategory(category);
+    setStep("template");
+    window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+  }
+
+  function usePopularTemplate(template: BiodataTemplate) {
+    setData((current) => ({
+      ...current,
+      category: template.category,
+      templateId: template.id,
+      fields: {
+        ...current.fields,
+        religion: template.category === "general" ? "" : template.category[0].toUpperCase() + template.category.slice(1)
+      }
+    }));
+    setStep("form");
+    window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+  }
+
   function importData(imported: BiodataFormData) {
     const templateExists = allTemplates.some((template) => template.id === imported.templateId);
     setData({
@@ -151,31 +434,62 @@ export default function Home() {
     setStep("form");
   }
 
+  function goHome() {
+    setPreviewTemplate(null);
+    setStep("category");
+    window.setTimeout(() => document.getElementById("home")?.scrollIntoView({ behavior: "smooth" }), 0);
+  }
+
+  function goCreate() {
+    setPreviewTemplate(null);
+    setStep("category");
+    window.setTimeout(() => document.getElementById("create")?.scrollIntoView({ behavior: "smooth" }), 0);
+  }
+
+  function goTemplates() {
+    setPreviewTemplate(null);
+    setStep("template");
+    window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+  }
+
+  function goPopularTemplates() {
+    setPreviewTemplate(null);
+    setStep("category");
+    window.setTimeout(() => document.getElementById("popular-templates")?.scrollIntoView({ behavior: "smooth" }), 0);
+  }
+
+  function goHowItWorks() {
+    setPreviewTemplate(null);
+    setStep("category");
+    window.setTimeout(() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" }), 0);
+  }
+
   return (
     <main>
-      <header className="border-b border-stone-200 bg-white">
+      <header className="site-header">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
           <button
             type="button"
-            className="flex items-center gap-3 text-left"
-            onClick={() => {
-              setPreviewTemplate(null);
-              setStep("category");
-            }}
+            className="text-left"
+            onClick={goHome}
             aria-label="Go to homepage"
           >
-            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-amber-100 text-amber-800">
-              <FileText size={24} />
-            </span>
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wide text-amber-700">Private, browser-only</p>
-              <h1 className="text-xl font-black text-stone-950 sm:text-2xl">Free Marriage Biodata Maker</h1>
-            </div>
+            <BrandLogo />
           </button>
+          <nav className="hidden items-center gap-9 text-sm font-semibold text-stone-700 md:flex">
+            <button type="button" onClick={goHome}>Home</button>
+            <button type="button" onClick={goPopularTemplates}>Popular Templates</button>
+            <button type="button" onClick={goHowItWorks}>How It Works</button>
+          </nav>
+          {step === "category" ? (
+            <button type="button" className="btn-primary hidden sm:inline-flex" onClick={goCreate}>
+              Create Bio-Data
+            </button>
+          ) : null}
           {step !== "category" ? (
             <button
               type="button"
-              className="btn-secondary hidden sm:inline-flex"
+              className="btn-secondary hidden lg:inline-flex"
               onClick={() => setStep(step === "preview" ? "form" : step === "form" ? "template" : "category")}
             >
               <ChevronLeft size={18} /> Back
@@ -184,33 +498,27 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="bg-gradient-to-b from-white to-amber-50/70">
-        <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
-          <div className="max-w-3xl">
-            <h2 className="text-4xl font-black leading-tight text-stone-950 sm:text-5xl">Free Marriage Biodata Maker</h2>
-            <p className="mt-4 text-lg leading-8 text-stone-700">
-              Create beautiful marriage biodata online and download PDF for free.
-            </p>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-stone-600">
-              No login, no backend, no database, no photo upload. Save drafts only on this device/browser, or move them with JSON export and import.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {step === "category" ? (
-        <>
-          <CategorySelector selected={data.category} onSelect={setCategory} />
-          <div className="mx-auto flex max-w-6xl justify-end px-4 pb-8">
-            <button type="button" className="btn-primary" onClick={() => setStep("template")}>
-              Choose Template
-            </button>
-          </div>
-        </>
+        <LandingHome
+          category={data.category}
+          onCategorySelect={chooseCategoryAndOpenTemplates}
+          onStartCreate={goCreate}
+          onOpenPopularTemplates={goPopularTemplates}
+          onOpenAllTemplates={goTemplates}
+          onPreviewTemplate={setPreviewTemplate}
+          onUseTemplate={usePopularTemplate}
+        />
       ) : null}
 
       {step === "template" ? (
         <>
+          <section className="app-intro">
+            <div className="mx-auto max-w-4xl px-4 py-10 text-center">
+              <SectionEyebrow>Template Gallery</SectionEyebrow>
+              <h2 className="section-title">Choose a Design Template</h2>
+              <p className="section-copy">Select a design, preview it with sample data, then fill your details.</p>
+            </div>
+          </section>
           <TemplateGallery
             category={data.category}
             templates={allTemplates}
@@ -229,6 +537,12 @@ export default function Home() {
 
       {step === "form" ? (
         <>
+          <section className="app-intro">
+            <div className="mx-auto max-w-4xl px-4 py-10 text-center">
+              <h2 className="section-title">Create Your Bio-Data</h2>
+              <p className="section-copy">Fill in your details, preview the selected template, and download as PDF.</p>
+            </div>
+          </section>
           <section className="mx-auto grid max-w-6xl gap-4 px-4 pt-6 lg:grid-cols-2">
             <DraftControls data={data} onLoad={importData} />
             <JsonImportExport data={data} onImport={importData} />
@@ -238,7 +552,7 @@ export default function Home() {
       ) : null}
 
       {step === "preview" ? (
-        <section className="mx-auto max-w-6xl px-4 py-6">
+        <section className="mx-auto max-w-6xl px-4 py-10">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-stone-200 bg-white p-4">
             <div>
               <h2 className="text-xl font-bold text-stone-950">Preview & Download</h2>

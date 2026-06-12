@@ -18,22 +18,22 @@ interface CategorySelectorProps {
 
 export function CategorySelector({ selected, onSelect }: CategorySelectorProps) {
   return (
-    <section className="mx-auto max-w-6xl px-4 py-8">
+    <section className="mx-auto max-w-6xl px-0 py-8">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {categories.map((category) => (
           <button
             key={category.key}
             type="button"
             onClick={() => onSelect(category.key)}
-            className={`min-h-40 rounded-lg border bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-soft ${
-              selected === category.key ? "border-amber-500 ring-2 ring-amber-200" : "border-stone-200"
+            className={`category-card corner-card min-h-36 p-4 text-left transition hover:-translate-y-0.5 ${
+              selected === category.key ? "category-card-selected border-[#c4a553]" : "border-[#ead7ac]"
             }`}
           >
-            <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-amber-100 text-amber-800">
+            <span className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[#f4ecd8] text-[#8b2b34]">
               {category.icon}
             </span>
-            <span className="block text-base font-bold text-stone-950">{category.title}</span>
-            <span className="mt-2 block text-sm leading-5 text-stone-600">{category.description}</span>
+            <span className="block font-serif text-base font-bold text-[#221816]">{category.title}</span>
+            <span className="mt-2 block text-sm leading-6 text-[#7d6f5c]">{category.description}</span>
           </button>
         ))}
       </div>
