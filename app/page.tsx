@@ -230,6 +230,7 @@ function LandingHome({
               Create a clean, professional marriage bio-data in minutes. Choose a template, fill your details,
               preview it, and download a print-ready PDF.
             </p>
+            <p className="project-tagline">Choose template {'->'} Fill your details {'->'} Download as PDF</p>
             <div className="mt-6 flex flex-wrap items-center gap-4">
               <button type="button" className="btn-primary btn-large" onClick={onStartCreate}>
                 Create Bio-Data Free <ArrowRight size={19} />
@@ -261,33 +262,6 @@ function LandingHome({
         </div>
       </section>
 
-      <section className="process-section" id="how-it-works">
-        <div className="mx-auto max-w-6xl px-4 py-14">
-          <div className="mx-auto max-w-3xl text-center">
-            <SectionEyebrow>Simple Process</SectionEyebrow>
-            <h2 className="section-title">Choose template {'->'} Fill your details {'->'} Download as PDF</h2>
-          </div>
-          <div className="process-grid">
-            {[
-              ["01", "Choose a Template", "Start with your category, then browse elegant bio-data templates and pick your favourite."],
-              ["02", "Fill Your Details", "Enter your personal, family, education, career, and contact information in a guided form."],
-              ["03", "Download as PDF", "Preview your bio-data and download a beautifully formatted, print-ready PDF instantly."]
-            ].map(([number, title, copy]) => (
-              <article key={number} className="process-card">
-                <span>{number}</span>
-                <h3>{title}</h3>
-                <p>{copy}</p>
-              </article>
-            ))}
-          </div>
-          <div className="mt-10 flex justify-center">
-            <button type="button" className="btn-primary btn-large" onClick={onStartCreate}>
-              Start Creating Now <ArrowRight size={19} />
-            </button>
-          </div>
-        </div>
-      </section>
-
       <section className="featured-section" id="popular-templates">
         <div className="mx-auto max-w-6xl px-4 py-14">
           <div className="mx-auto max-w-3xl text-center">
@@ -298,23 +272,34 @@ function LandingHome({
           <div className="featured-grid">
             {popularTemplates.map((template) => (
               <article key={template.id} className="featured-template" style={{ background: template.theme.background }}>
-                <div style={{ border: template.borderStyle }}>
-                  <h3>{template.name.replace(/^(Hindu|Muslim|Sikh|Christian|General)\s/, "")}</h3>
-                  <p>{template.layout} layout</p>
-                  <div className="featured-actions">
-                    <button
-                      type="button"
-                      className="featured-preview-button"
-                      onClick={() => onPreviewTemplate(template)}
-                      aria-label={`Preview ${template.name}`}
-                      title="Preview"
-                    >
-                      <Eye size={18} />
-                    </button>
-                    <button type="button" className="featured-select-button" onClick={() => onUseTemplate(template)}>
-                      Select and fill <Check size={17} />
-                    </button>
+                <div className="featured-template-paper" style={{ border: template.borderStyle }}>
+                  <span className="featured-category">{template.category} biodata</span>
+                  <div className="featured-template-mark" style={{ background: template.theme.accent, color: template.theme.primary }}>
+                    *
                   </div>
+                  <h3>{template.name.replace(/^(Hindu|Muslim|Sikh|Christian|General)\s/, "")}</h3>
+                  <p>{template.description.replace(/^.*? Tailored/, "Tailored")}</p>
+                  <div className="featured-mini-divider" style={{ color: template.theme.primary }}>
+                    <span /> * <span />
+                  </div>
+                  <div className="featured-mini-rows">
+                    <span><strong>Layout</strong><em>{template.layout}</em></span>
+                    <span><strong>Style</strong><em>{template.headingStyle}</em></span>
+                  </div>
+                </div>
+                <div className="featured-actions">
+                  <button
+                    type="button"
+                    className="featured-preview-button"
+                    onClick={() => onPreviewTemplate(template)}
+                    aria-label={`Preview ${template.name}`}
+                    title="Preview"
+                  >
+                    <Eye size={18} />
+                  </button>
+                  <button type="button" className="featured-select-button" onClick={() => onUseTemplate(template)}>
+                    Select and fill <Check size={17} />
+                  </button>
                 </div>
               </article>
             ))}
@@ -367,7 +352,6 @@ function FooterCta({ onCreate }: { onCreate: () => void }) {
           <h3>Quick Links</h3>
           <button type="button" onClick={onCreate}>Create Bio-Data</button>
           <a href="#popular-templates">Popular Templates</a>
-          <a href="#how-it-works">How It Works</a>
         </div>
         <div>
           <h3>Get Started Today</h3>
@@ -458,12 +442,6 @@ export default function Home() {
     window.setTimeout(() => document.getElementById("popular-templates")?.scrollIntoView({ behavior: "smooth" }), 0);
   }
 
-  function goHowItWorks() {
-    setPreviewTemplate(null);
-    setStep("category");
-    window.setTimeout(() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" }), 0);
-  }
-
   return (
     <main>
       <header className="site-header">
@@ -479,7 +457,6 @@ export default function Home() {
           <nav className="hidden items-center gap-9 text-sm font-semibold text-stone-700 md:flex">
             <button type="button" onClick={goHome}>Home</button>
             <button type="button" onClick={goPopularTemplates}>Popular Templates</button>
-            <button type="button" onClick={goHowItWorks}>How It Works</button>
           </nav>
           {step === "category" ? (
             <button type="button" className="btn-primary hidden sm:inline-flex" onClick={goCreate}>
