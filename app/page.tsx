@@ -198,7 +198,6 @@ interface LandingHomeProps {
   onCategorySelect: (category: BiodataCategory) => void;
   onStartCreate: () => void;
   onOpenPopularTemplates: () => void;
-  onOpenAllTemplates: () => void;
   onPreviewTemplate: (template: BiodataTemplate) => void;
   onUseTemplate: (template: BiodataTemplate) => void;
 }
@@ -208,7 +207,6 @@ function LandingHome({
   onCategorySelect,
   onStartCreate,
   onOpenPopularTemplates,
-  onOpenAllTemplates,
   onPreviewTemplate,
   onUseTemplate
 }: LandingHomeProps) {
@@ -305,7 +303,7 @@ function LandingHome({
             ))}
           </div>
           <div className="mt-10 text-center">
-            <button type="button" className="link-button" onClick={onOpenAllTemplates}>
+            <button type="button" className="link-button" onClick={onStartCreate}>
               View all templates {'->'}
             </button>
           </div>
@@ -430,12 +428,6 @@ export default function Home() {
     window.setTimeout(() => document.getElementById("create")?.scrollIntoView({ behavior: "smooth" }), 0);
   }
 
-  function goTemplates() {
-    setPreviewTemplate(null);
-    setStep("template");
-    window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
-  }
-
   function goPopularTemplates() {
     setPreviewTemplate(null);
     setStep("category");
@@ -481,7 +473,6 @@ export default function Home() {
           onCategorySelect={chooseCategoryAndOpenTemplates}
           onStartCreate={goCreate}
           onOpenPopularTemplates={goPopularTemplates}
-          onOpenAllTemplates={goTemplates}
           onPreviewTemplate={setPreviewTemplate}
           onUseTemplate={usePopularTemplate}
         />
