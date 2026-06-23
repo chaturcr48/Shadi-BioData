@@ -1018,7 +1018,7 @@ textarea {
   border: var(--bio-border);
   color: var(--bio-text);
   font-family: var(--bio-font);
-  padding: 18mm;
+  padding: 16mm 16mm 24mm;
   box-shadow: 0 22px 80px rgba(15, 23, 42, 0.18);
   print-color-adjust: exact;
   -webkit-print-color-adjust: exact;
@@ -1278,6 +1278,15 @@ textarea {
     repeating-linear-gradient(90deg, transparent 0 6mm, rgba(223, 179, 65, 0.8) 6mm 8mm, transparent 8mm 12mm);
 }
 
+.ornament-temple-gold {
+  padding-bottom: 34mm;
+}
+
+.ornament-temple-gold .bio-footer {
+  bottom: 17mm;
+  background: var(--bio-paper);
+}
+
 .ornament-dark-floral {
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23f0d28c' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M18 190c36-44 46-92 30-144'/%3E%3Cpath d='M50 176c34-28 66-42 110-44'/%3E%3Cpath d='M80 52c36 14 58 38 66 72'/%3E%3C/g%3E%3Cg fill='%23f0d28c'%3E%3Cpath d='M26 164c20-18 38-20 54-8-20 20-38 22-54 8z'/%3E%3Cpath d='M74 120c18-16 34-18 48-6-18 18-34 20-48 6z'/%3E%3Ccircle cx='150' cy='132' r='9'/%3E%3Ccircle cx='170' cy='128' r='6'/%3E%3Ccircle cx='160' cy='150' r='7'/%3E%3C/g%3E%3C/svg%3E") top left / 56mm 56mm no-repeat,
@@ -1306,10 +1315,23 @@ textarea {
   color: var(--bio-primary);
 }
 
+.ornament-dark-floral {
+  padding: 18mm 20mm 34mm;
+}
+
+.ornament-dark-floral .bio-content {
+  gap: 4mm;
+}
+
+.ornament-dark-floral .bio-footer {
+  bottom: 17mm;
+  background: var(--bio-paper);
+}
+
 .bio-header {
   position: relative;
   z-index: 1;
-  margin-bottom: 9mm;
+  margin-bottom: 7mm;
   text-align: center;
 }
 
@@ -1346,7 +1368,7 @@ textarea {
 .bio-header h1 {
   margin: 0;
   color: var(--bio-primary);
-  font-size: 27pt;
+  font-size: 25pt;
   line-height: 1.12;
 }
 
@@ -1360,7 +1382,7 @@ textarea {
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 6mm;
+  gap: 4.8mm;
 }
 
 .layout-two-column .bio-content {
@@ -1377,15 +1399,11 @@ textarea {
   grid-column: auto;
 }
 
-.layout-centered .bio-field {
-  text-align: center;
-}
-
 .layout-cards .bio-section {
   border: 1px solid var(--bio-accent);
   border-radius: 4mm;
   background: var(--bio-card-bg, #fffaf0);
-  padding: 5mm;
+  padding: 4mm;
 }
 
 .layout-resume .bio-header {
@@ -1407,9 +1425,9 @@ textarea {
 }
 
 .bio-section h2 {
-  margin: 0 0 4mm;
+  margin: 0 0 3mm;
   color: var(--bio-primary);
-  font-size: 13pt;
+  font-size: 12pt;
   line-height: 1.2;
 }
 
@@ -1438,7 +1456,7 @@ textarea {
 
 .bio-fields {
   display: grid;
-  gap: 2.8mm 7mm;
+  gap: 2.2mm 6mm;
 }
 
 .layout-single .bio-fields,
@@ -1457,14 +1475,26 @@ textarea {
 
 .bio-field {
   display: grid;
-  gap: 1mm;
+  grid-template-columns: minmax(31mm, 0.9fr) 4mm minmax(0, 1.25fr);
+  align-items: baseline;
+  gap: 1.5mm;
   min-width: 0;
   break-inside: avoid;
   page-break-inside: avoid;
   -webkit-column-break-inside: avoid;
 }
 
+.bio-field::before {
+  content: ":";
+  grid-column: 2;
+  grid-row: 1;
+  color: var(--bio-muted);
+  font-weight: 700;
+}
+
 .bio-field dt {
+  grid-column: 1;
+  grid-row: 1;
   color: var(--bio-muted);
   font-size: 8.5pt;
   font-weight: 700;
@@ -1472,10 +1502,12 @@ textarea {
 }
 
 .bio-field dd {
+  grid-column: 3;
+  grid-row: 1;
   margin: 0;
   color: var(--bio-text);
-  font-size: 10.8pt;
-  line-height: 1.45;
+  font-size: 10.2pt;
+  line-height: 1.38;
   break-inside: avoid;
   page-break-inside: avoid;
   overflow-wrap: anywhere;
@@ -1487,12 +1519,18 @@ textarea {
 }
 
 .bio-footer {
-  position: relative;
+  position: absolute;
   z-index: 1;
-  margin-top: 9mm;
+  left: 16mm;
+  right: 16mm;
+  bottom: 9mm;
+  margin-top: 0;
   border-top: 1px solid var(--bio-accent);
-  padding-top: 4mm;
+  padding-top: 3mm;
   color: var(--bio-muted);
+  display: flex;
+  justify-content: center;
+  gap: 5mm;
   font-size: 8pt;
   text-align: center;
 }

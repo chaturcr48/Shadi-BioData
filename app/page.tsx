@@ -163,8 +163,8 @@ function SectionEyebrow({ children }: { children: React.ReactNode }) {
 
 function MiniBiodataCard() {
   const rows = [
-    ["Date of Birth", "15 March 1997"],
-    ["Height", "5'4\""],
+    ["Date of Birth", "10 July 1998"],
+    ["Height", "5'10\""],
     ["Education", "B.Tech, Delhi University"],
     ["Profession", "Software Engineer"],
     ["Religion", "Hindu - Brahmin"],
@@ -175,7 +175,7 @@ function MiniBiodataCard() {
     <div className="hero-preview-card">
       <div className="hero-preview-paper">
         <div className="hero-preview-flower">*</div>
-        <h3>Priya Sharma</h3>
+        <h3>Kumar Harsh</h3>
         <p>Marriage Bio-Data</p>
         <div className="ornamental-divider"><span />*<span /></div>
         <dl>
