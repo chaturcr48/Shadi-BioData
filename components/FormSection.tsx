@@ -17,6 +17,80 @@ interface FormSectionProps {
   onCustomFieldChange: (id: string, patch: Partial<CustomField>) => void;
 }
 
+const fieldPlaceholders: Record<string, string> = {
+  fullName: "e.g. Aarav Kumar",
+  dateOfBirth: "Select date of birth",
+  timeOfBirth: "e.g. 07:30 AM",
+  placeOfBirth: "e.g. Jaipur, Rajasthan",
+  age: "e.g. 28",
+  height: "e.g. 5 feet 8 inches",
+  weight: "e.g. 70 kg",
+  complexion: "e.g. Fair",
+  bloodGroup: "e.g. B+",
+  maritalStatus: "Select marital status",
+  motherTongue: "e.g. Hindi",
+  religion: "e.g. Hindu",
+  casteCommunity: "e.g. Brahmin",
+  subCaste: "e.g. Saraswat",
+  gotraClan: "e.g. Kashyap",
+  manglikStatus: "e.g. Non Manglik",
+  education: "e.g. B.Tech, Delhi University",
+  occupation: "e.g. Software Engineer",
+  companyBusiness: "e.g. Infosys Ltd.",
+  annualIncome: "e.g. 12 LPA",
+  workLocation: "e.g. Bengaluru",
+  currentCity: "e.g. New Delhi",
+  nativePlace: "e.g. Lucknow, Uttar Pradesh",
+  aboutMe: "Write a short introduction about education, career, values, and interests",
+  fatherName: "e.g. Mr. Rajesh Kumar",
+  fatherOccupation: "e.g. Business Owner",
+  motherName: "e.g. Mrs. Sunita Kumar",
+  motherOccupation: "e.g. Homemaker",
+  brothers: "e.g. 1",
+  sisters: "e.g. 1",
+  familyType: "e.g. Nuclear family",
+  familyValues: "e.g. Traditional with modern outlook",
+  familyStatus: "e.g. Upper middle class",
+  familyLocation: "e.g. Jaipur, Rajasthan",
+  aboutFamily: "Write a short note about family background and values",
+  preferredAgeRange: "e.g. 24 to 29 years",
+  preferredHeight: "e.g. 5 feet 2 inches and above",
+  preferredReligion: "e.g. Hindu",
+  preferredCaste: "e.g. Same community preferred",
+  preferredEducation: "e.g. Graduate or above",
+  preferredProfession: "e.g. Working professional",
+  preferredLocation: "e.g. Delhi NCR preferred",
+  otherExpectations: "Add any other partner preferences",
+  contactPerson: "e.g. Mr. Rajesh Kumar",
+  mobileNumber: "e.g. 9876543210",
+  alternateMobileNumber: "e.g. 9123456780",
+  email: "e.g. family@example.com",
+  address: "e.g. House no., locality, city, state",
+  nakshatra: "e.g. Rohini",
+  rashi: "e.g. Mithuna (Gemini)",
+  kuldeviKuldevta: "e.g. Shri Ganesh Ji",
+  sect: "e.g. Sunni",
+  maslak: "e.g. Hanafi",
+  namaz: "e.g. Regular",
+  hijabPreference: "e.g. Optional / Preferred",
+  islamicEducation: "e.g. Quran studies",
+  amritdhari: "e.g. Yes / No",
+  gurdwaraAssociation: "e.g. Local gurdwara name",
+  denomination: "e.g. Catholic",
+  churchName: "e.g. St. Mary's Church",
+  baptismConfirmation: "e.g. Baptised and confirmed",
+  communityBackground: "e.g. Punjabi family",
+  culturalValues: "e.g. Simple, family-oriented values"
+};
+
+function getPlaceholder(field: FieldDefinition) {
+  if (field.type === "select") {
+    return `Select ${field.label.toLowerCase()}`;
+  }
+
+  return field.placeholder ?? fieldPlaceholders[field.key] ?? `Enter ${field.label.toLowerCase()}`;
+}
+
 export function FormSection({
   title,
   section,
@@ -49,6 +123,7 @@ export function FormSection({
               <textarea
                 value={values[field.key] ?? ""}
                 onChange={(event) => onFieldChange(field.key, event.target.value)}
+                placeholder={getPlaceholder(field)}
                 className="input min-h-28 resize-y"
               />
             ) : field.type === "select" ? (
@@ -57,7 +132,7 @@ export function FormSection({
                 onChange={(event) => onFieldChange(field.key, event.target.value)}
                 className="input"
               >
-                <option value="">Select</option>
+                <option value="">{getPlaceholder(field)}</option>
                 {field.options?.map((option) => (
                   <option key={option} value={option}>
                     {option}
@@ -69,6 +144,7 @@ export function FormSection({
                 type={field.type ?? "text"}
                 value={values[field.key] ?? ""}
                 onChange={(event) => onFieldChange(field.key, event.target.value)}
+                placeholder={getPlaceholder(field)}
                 className="input"
               />
             )}
@@ -113,12 +189,14 @@ export function FormSection({
                   value={field.label}
                   onChange={(event) => onCustomFieldChange(field.id, { label: event.target.value })}
                   className="input bg-white"
+                  placeholder="Field name"
                   aria-label="Custom field label"
                 />
                 <input
                   value={field.value}
                   onChange={(event) => onCustomFieldChange(field.id, { value: event.target.value })}
                   className="input bg-white"
+                  placeholder="Field value"
                   aria-label="Custom field value"
                 />
                 <button

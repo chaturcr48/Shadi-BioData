@@ -210,7 +210,7 @@ function LandingHome({
   onPreviewTemplate,
   onUseTemplate
 }: LandingHomeProps) {
-  const popularTemplateIds = ["hindu-1", "hindu-4", "muslim-3", "sikh-6", "christian-10", "general-14"];
+  const popularTemplateIds = ["hindu-16", "hindu-17", "hindu-18", "hindu-19", "hindu-20", "general-20"];
   const popularTemplates = popularTemplateIds
     .map((id) => allTemplates.find((template) => template.id === id))
     .filter((template): template is BiodataTemplate => Boolean(template));

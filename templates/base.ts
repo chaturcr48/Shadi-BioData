@@ -150,6 +150,56 @@ const designSeeds = [
     layout: "centered",
     headingStyle: "underline",
     ornament: "royal"
+  },
+  {
+    name: "Gold Ornate Royale",
+    description: "Grand golden corner work with a formal biodata body and soft watermark feel.",
+    theme: { background: "#fff7e7", paper: "#fffefa", primary: "#aa7a12", secondary: "#c49a30", accent: "#efd58f", text: "#1f1710", muted: "#6f5a3a" },
+    fontFamily: "'Trebuchet MS', Arial, sans-serif",
+    borderStyle: "solid 3px #c9971a",
+    layout: "two-column",
+    headingStyle: "underline",
+    ornament: "gold-ornate"
+  },
+  {
+    name: "Blush Floral Vines",
+    description: "Soft peach florals, leafy corners, and a delicate modern matrimonial layout.",
+    theme: { background: "#fff4f1", paper: "#fffafa", primary: "#b66b5e", secondary: "#d99c8e", accent: "#f5c8bd", text: "#332321", muted: "#7d6460" },
+    fontFamily: "'Segoe UI', Arial, sans-serif",
+    borderStyle: "solid 2px #e9b8ad",
+    layout: "single",
+    headingStyle: "bar",
+    ornament: "blush-vines"
+  },
+  {
+    name: "Red Elephant Mandap",
+    description: "Traditional red ceremonial styling inspired by mandap pillars and festive motifs.",
+    theme: { background: "#7f1721", paper: "#fffdf8", primary: "#a0142b", secondary: "#d97706", accent: "#ffd36a", text: "#25140f", muted: "#6d5045" },
+    fontFamily: "'Trebuchet MS', Arial, sans-serif",
+    borderStyle: "solid 10mm #9b1422",
+    layout: "single",
+    headingStyle: "plain",
+    ornament: "red-elephant"
+  },
+  {
+    name: "Temple Gold Cream",
+    description: "Subtle cream paper with temple-inspired gold edges and a refined centered title.",
+    theme: { background: "#fff3e8", paper: "#fff6ee", primary: "#7f1d1d", secondary: "#a16207", accent: "#dfb341", text: "#2a1714", muted: "#765d51" },
+    fontFamily: "Georgia, 'Times New Roman', serif",
+    borderStyle: "solid 2px #dfb341",
+    layout: "two-column",
+    headingStyle: "underline",
+    ornament: "temple-gold"
+  },
+  {
+    name: "Dark Floral Resume",
+    description: "Premium dark floral resume-style biodata with high contrast and gold typography.",
+    theme: { background: "#15110f", paper: "#30241f", primary: "#f0d28c", secondary: "#c8a35b", accent: "#f3daa0", text: "#fff8ea", muted: "#e3cda2" },
+    fontFamily: "'Segoe UI', Arial, sans-serif",
+    borderStyle: "solid 2px #d3aa62",
+    layout: "two-column",
+    headingStyle: "bar",
+    ornament: "dark-floral"
   }
 ] as const;
 

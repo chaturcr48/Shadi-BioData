@@ -31,7 +31,18 @@ export interface BiodataTemplate {
   borderStyle: string;
   layout: LayoutType;
   headingStyle: HeadingStyle;
-  ornament: "none" | "floral" | "corner" | "divider" | "royal" | "header-footer";
+  ornament:
+    | "none"
+    | "floral"
+    | "corner"
+    | "divider"
+    | "royal"
+    | "header-footer"
+    | "gold-ornate"
+    | "blush-vines"
+    | "red-elephant"
+    | "temple-gold"
+    | "dark-floral";
 }
 
 export interface CustomField {
@@ -54,6 +65,7 @@ export interface FieldDefinition {
   label: string;
   section: SectionKey;
   type?: "text" | "email" | "tel" | "date" | "textarea" | "number" | "select";
+  placeholder?: string;
   options?: string[];
 }
 
