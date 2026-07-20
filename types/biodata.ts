@@ -21,6 +21,13 @@ export interface TemplateTheme {
   muted: string;
 }
 
+export interface TemplateAssets {
+  frame?: string;
+  watermark?: string;
+  icon?: string;
+  flourish?: string;
+}
+
 export interface BiodataTemplate {
   id: string;
   name: string;
@@ -31,6 +38,7 @@ export interface BiodataTemplate {
   borderStyle: string;
   layout: LayoutType;
   headingStyle: HeadingStyle;
+  assets?: TemplateAssets;
   ornament:
     | "none"
     | "floral"
@@ -42,7 +50,8 @@ export interface BiodataTemplate {
     | "blush-vines"
     | "red-elephant"
     | "temple-gold"
-    | "dark-floral";
+    | "dark-floral"
+    | "ganesha-premium";
 }
 
 export interface CustomField {

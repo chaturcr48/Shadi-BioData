@@ -16,7 +16,8 @@ interface PreviewField {
 }
 
 interface PreviewSection {
-  section: SectionKey;
+  section: string;
+  title: string;
   rows: PreviewField[];
   continued?: boolean;
 }
@@ -35,7 +36,7 @@ function fieldRows(fields: FieldDefinition[], data: BiodataFormData, section: Se
 }
 
 function rowWeight(row: PreviewField, template: BiodataTemplate) {
-  const charsPerLine = template.layout === "two-column" || template.ornament === "gold-ornate" ? 34 : 48;
+  const charsPerLine = template.layout === "two-column" || template.ornament === "gold-ornate" || template.ornament === "ganesha-premium" ? 34 : 48;
   const valueLines = Math.max(1, Math.ceil(row.value.length / charsPerLine));
   const labelLines = row.label.length > 28 ? 1.25 : 1;
   return labelLines + Math.max(0, valueLines - 1) * 0.8;
@@ -43,11 +44,12 @@ function rowWeight(row: PreviewField, template: BiodataTemplate) {
 
 function sectionWeight(section: PreviewSection, template: BiodataTemplate) {
   const headingWeight = section.continued ? 2.2 : 3;
-  const rowMultiplier = template.ornament === "gold-ornate" ? 1.15 : 1;
+  const rowMultiplier = template.ornament === "gold-ornate" ? 0.9 : 1;
   return headingWeight + section.rows.reduce((total, row) => total + rowWeight(row, template) * rowMultiplier, 0);
 }
 
 function pageWeightLimit(template: BiodataTemplate) {
+  if (template.ornament === "ganesha-premium") return 24;
   if (template.ornament === "red-elephant") return 23;
   if (template.ornament === "dark-floral") return 18;
   if (template.ornament === "temple-gold") return 20;
@@ -66,10 +68,10 @@ function splitSection(section: PreviewSection, template: BiodataTemplate, maxWei
   let currentWeight = 3;
 
   section.rows.forEach((row) => {
-    const nextWeight = rowWeight(row, template) * (template.ornament === "gold-ornate" ? 1.15 : 1);
+    const nextWeight = rowWeight(row, template) * (template.ornament === "gold-ornate" ? 0.9 : 1);
 
     if (currentRows.length && currentWeight + nextWeight > maxWeight) {
-      chunks.push({ section: section.section, rows: currentRows, continued: chunks.length > 0 });
+      chunks.push({ section: section.section, title: section.title, rows: currentRows, continued: chunks.length > 0 });
       currentRows = [];
       currentWeight = 2.2;
     }
@@ -79,7 +81,7 @@ function splitSection(section: PreviewSection, template: BiodataTemplate, maxWei
   });
 
   if (currentRows.length) {
-    chunks.push({ section: section.section, rows: currentRows, continued: chunks.length > 0 });
+    chunks.push({ section: section.section, title: section.title, rows: currentRows, continued: chunks.length > 0 });
   }
 
   return chunks;
@@ -89,21 +91,20 @@ function paginateSections(sections: PreviewSection[], template: BiodataTemplate)
   if (!sections.length) return [[]];
 
   if (template.ornament === "gold-ornate") {
+    const firstPageLimit = 52;
     const totalWeight = sections.reduce((total, section) => total + sectionWeight(section, template), 0);
 
-    if (totalWeight <= 34) {
+    if (totalWeight <= firstPageLimit) {
       return [sections];
     }
 
-    const targetFirstPageWeight = totalWeight / 2;
     const firstPage: PreviewSection[] = [];
     const secondPage: PreviewSection[] = [];
     let firstPageWeight = 0;
 
     sections.forEach((section) => {
       const nextWeight = sectionWeight(section, template);
-      const shouldStayOnFirstPage =
-        !firstPage.length || firstPageWeight + nextWeight <= targetFirstPageWeight || !secondPage.length && firstPage.length < 3;
+      const shouldStayOnFirstPage = !firstPage.length || firstPageWeight + nextWeight <= firstPageLimit;
 
       if (shouldStayOnFirstPage) {
         firstPage.push(section);
@@ -146,8 +147,9 @@ function paginateSections(sections: PreviewSection[], template: BiodataTemplate)
 export function PreviewRenderer({ data, template, id = "biodata-pdf" }: PreviewRendererProps) {
   const fields = useMemo(() => getFieldsForCategory(data.category), [data.category]);
   const fullName = data.fields.fullName?.trim() || "Marriage Biodata";
+  const isGoldOrnate = template.ornament === "gold-ornate";
   const visibleSections = data.sectionOrder
-    .map((section) => ({ section, rows: fieldRows(fields, data, section) }))
+    .map((section) => ({ section, title: getSectionTitle(section), rows: fieldRows(fields, data, section) }))
     .filter((section) => section.rows.length);
   const pages = paginateSections(visibleSections, template);
 
@@ -161,7 +163,11 @@ export function PreviewRenderer({ data, template, id = "biodata-pdf" }: PreviewR
     "--bio-text": template.theme.text,
     "--bio-muted": template.theme.muted,
     "--bio-border": template.borderStyle,
-    "--bio-font": template.fontFamily
+    "--bio-font": template.fontFamily,
+    "--bio-frame-image": template.assets?.frame ? `url("${template.assets.frame}")` : "none",
+    "--bio-watermark-image": template.assets?.watermark ? `url("${template.assets.watermark}")` : "none",
+    "--bio-icon-image": template.assets?.icon ? `url("${template.assets.icon}")` : "none",
+    "--bio-flourish-image": template.assets?.flourish ? `url("${template.assets.flourish}")` : "none"
   } as React.CSSProperties;
 
   return (
@@ -174,19 +180,22 @@ export function PreviewRenderer({ data, template, id = "biodata-pdf" }: PreviewR
             className={`bio-page layout-${template.layout} heading-${template.headingStyle} ornament-${template.ornament}`}
           >
             <header className="bio-header avoid-break">
-              <div className="bio-mark" aria-hidden="true">
-                <span className="bio-heart">&hearts;</span>
-              </div>
-              <p className="bio-kicker">{template.name}</p>
+              {!isGoldOrnate ? (
+                <div className="bio-mark" aria-hidden="true">
+                  <span className="bio-heart">&hearts;</span>
+                </div>
+              ) : null}
+              {template.ornament === "ganesha-premium" || isGoldOrnate ? <p className="bio-invocation">ॐ गणेशाय नमः</p> : null}
+              {!isGoldOrnate ? <p className="bio-kicker">{template.name}</p> : null}
               <h1>{fullName}</h1>
               <p className="bio-subtitle">Marriage Biodata</p>
             </header>
 
             <div className="bio-content">
               {visibleSections.length ? (
-                pageSections.map(({ section, rows, continued }, sectionIndex) => (
+                pageSections.map(({ section, title, rows, continued }, sectionIndex) => (
                   <section key={`${pageIndex}-${section}-${sectionIndex}`} className="bio-section avoid-break">
-                    <h2>{getSectionTitle(section)}{continued ? " (continued)" : ""}</h2>
+                    <h2>{title}{continued ? " (continued)" : ""}</h2>
                     <div className="bio-fields">
                       {rows.map((row) => (
                         <div key={`${section}-${row.label}`} className="bio-field">
@@ -205,10 +214,6 @@ export function PreviewRenderer({ data, template, id = "biodata-pdf" }: PreviewR
               )}
             </div>
 
-            <footer className="bio-footer avoid-break">
-              <span>Created with Free Marriage Biodata Maker</span>
-              {pages.length > 1 ? <span>Page {pageIndex + 1} of {pages.length}</span> : null}
-            </footer>
           </article>
         ))}
       </div>
