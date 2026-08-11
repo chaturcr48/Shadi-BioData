@@ -355,6 +355,26 @@ textarea {
   box-shadow: 0 18px 48px rgba(139, 43, 52, 0.1);
 }
 
+.hero-preview-button {
+  display: block;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.hero-preview-button:hover {
+  border-color: var(--gold);
+  box-shadow: 0 22px 58px rgba(139, 43, 52, 0.14);
+  transform: translateY(-2px);
+}
+
+.hero-preview-button:focus-visible {
+  outline: 3px solid rgba(196, 165, 83, 0.35);
+  outline-offset: 4px;
+}
+
 .hero-preview-paper {
   border: 2px double var(--gold);
   min-height: 430px;
@@ -1878,6 +1898,50 @@ textarea {
 .ornament-dark-floral .bio-section h2::after {
   display: none;
   content: none;
+}
+
+.ornament-divider,
+.ornament-corner,
+.ornament-floral,
+.ornament-royal,
+.ornament-header-footer,
+.ornament-blush-vines,
+.ornament-red-elephant,
+.ornament-temple-gold,
+.ornament-dark-floral {
+  padding-left: 32mm;
+  padding-right: 32mm;
+}
+
+.ornament-ganesha-premium {
+  padding-left: 34mm;
+  padding-right: 34mm;
+}
+
+.bio-content,
+.layout-two-column .bio-content,
+.ornament-gold-ornate .bio-content {
+  grid-template-columns: 1fr;
+}
+
+.layout-two-column .bio-section:first-child,
+.layout-two-column .bio-section:last-child,
+.layout-two-column.ornament-gold-ornate .bio-section:first-child,
+.layout-two-column.ornament-gold-ornate .bio-section:last-child,
+.ornament-gold-ornate .bio-section {
+  grid-column: auto;
+}
+
+.bio-fields,
+.layout-single .bio-fields,
+.layout-cards .bio-fields,
+.layout-resume .bio-fields,
+.layout-centered .bio-fields,
+.layout-two-column .bio-fields,
+.ornament-gold-ornate .bio-fields,
+.ornament-ganesha-premium .bio-fields,
+.layout-single.ornament-ganesha-premium .bio-fields {
+  grid-template-columns: 1fr;
 }
 
 .ornament-ganesha-premium .bio-section h2 {

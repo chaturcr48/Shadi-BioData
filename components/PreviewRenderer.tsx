@@ -49,6 +49,7 @@ function sectionWeight(section: PreviewSection, template: BiodataTemplate) {
 }
 
 function pageWeightLimit(template: BiodataTemplate) {
+  if (template.ornament === "gold-ornate") return 22;
   if (template.ornament === "ganesha-premium") return 24;
   if (template.ornament === "red-elephant") return 23;
   if (template.ornament === "dark-floral") return 18;
@@ -90,33 +91,6 @@ function splitSection(section: PreviewSection, template: BiodataTemplate, maxWei
 function paginateSections(sections: PreviewSection[], template: BiodataTemplate): PreviewSection[][] {
   if (!sections.length) return [[]];
 
-  if (template.ornament === "gold-ornate") {
-    const firstPageLimit = 52;
-    const totalWeight = sections.reduce((total, section) => total + sectionWeight(section, template), 0);
-
-    if (totalWeight <= firstPageLimit) {
-      return [sections];
-    }
-
-    const firstPage: PreviewSection[] = [];
-    const secondPage: PreviewSection[] = [];
-    let firstPageWeight = 0;
-
-    sections.forEach((section) => {
-      const nextWeight = sectionWeight(section, template);
-      const shouldStayOnFirstPage = !firstPage.length || firstPageWeight + nextWeight <= firstPageLimit;
-
-      if (shouldStayOnFirstPage) {
-        firstPage.push(section);
-        firstPageWeight += nextWeight;
-      } else {
-        secondPage.push(section);
-      }
-    });
-
-    return secondPage.length ? [firstPage, secondPage] : [firstPage];
-  }
-
   const maxWeight = pageWeightLimit(template);
   const pages: PreviewSection[][] = [];
   let currentPage: PreviewSection[] = [];
@@ -144,10 +118,19 @@ function paginateSections(sections: PreviewSection[], template: BiodataTemplate)
   return pages;
 }
 
+function templateCssClass(template: BiodataTemplate) {
+  return `template-${template.name
+    .replace(/^(Hindu|Muslim|Sikh|Christian|General)\s+/, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")}`;
+}
+
 export function PreviewRenderer({ data, template, id = "biodata-pdf" }: PreviewRendererProps) {
   const fields = useMemo(() => getFieldsForCategory(data.category), [data.category]);
-  const fullName = data.fields.fullName?.trim() || "Marriage Biodata";
   const isGoldOrnate = template.ornament === "gold-ornate";
+  const templateClassName = templateCssClass(template);
+  const showInvocation = template.ornament === "ganesha-premium" || isGoldOrnate || templateClassName === "template-floral-blush";
   const visibleSections = data.sectionOrder
     .map((section) => ({ section, title: getSectionTitle(section), rows: fieldRows(fields, data, section) }))
     .filter((section) => section.rows.length);
@@ -177,19 +160,13 @@ export function PreviewRenderer({ data, template, id = "biodata-pdf" }: PreviewR
           <article
             key={`page-${pageIndex}`}
             style={style}
-            className={`bio-page layout-${template.layout} heading-${template.headingStyle} ornament-${template.ornament}`}
+            className={`bio-page ${templateClassName} layout-${template.layout} heading-${template.headingStyle} ornament-${template.ornament}`}
           >
-            <header className="bio-header avoid-break">
-              {!isGoldOrnate ? (
-                <div className="bio-mark" aria-hidden="true">
-                  <span className="bio-heart">&hearts;</span>
-                </div>
-              ) : null}
-              {template.ornament === "ganesha-premium" || isGoldOrnate ? <p className="bio-invocation">ॐ गणेशाय नमः</p> : null}
-              {!isGoldOrnate ? <p className="bio-kicker">{template.name}</p> : null}
-              <h1>{fullName}</h1>
-              <p className="bio-subtitle">Marriage Biodata</p>
-            </header>
+            {showInvocation && pageIndex === 0 ? (
+              <header className="bio-header bio-header-invocation-only avoid-break">
+                <p className="bio-invocation">ॐ गणेशाय नमः</p>
+              </header>
+            ) : null}
 
             <div className="bio-content">
               {visibleSections.length ? (

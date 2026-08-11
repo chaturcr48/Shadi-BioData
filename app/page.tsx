@@ -161,7 +161,7 @@ function SectionEyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
-function MiniBiodataCard() {
+function MiniBiodataCard({ onClick }: { onClick: () => void }) {
   const rows = [
     ["Date of Birth", "10 July 1998"],
     ["Height", "5'10\""],
@@ -172,7 +172,12 @@ function MiniBiodataCard() {
   ];
 
   return (
-    <div className="hero-preview-card">
+    <button
+      type="button"
+      className="hero-preview-card hero-preview-button"
+      onClick={onClick}
+      aria-label="Open Gold Ornate Royale with sample data"
+    >
       <div className="hero-preview-paper">
         <div className="hero-preview-flower">*</div>
         <h3>Kumar Harsh</h3>
@@ -189,7 +194,7 @@ function MiniBiodataCard() {
         <div className="ornamental-divider"><span />*<span /></div>
         <p className="hero-preview-contact">Contact: +91 98765 43210</p>
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -198,6 +203,7 @@ interface LandingHomeProps {
   onCategorySelect: (category: BiodataCategory) => void;
   onStartCreate: () => void;
   onOpenPopularTemplates: () => void;
+  onOpenHeroTemplate: () => void;
   onPreviewTemplate: (template: BiodataTemplate) => void;
   onUseTemplate: (template: BiodataTemplate) => void;
 }
@@ -207,10 +213,11 @@ function LandingHome({
   onCategorySelect,
   onStartCreate,
   onOpenPopularTemplates,
+  onOpenHeroTemplate,
   onPreviewTemplate,
   onUseTemplate
 }: LandingHomeProps) {
-  const popularTemplateIds = ["hindu-8", "hindu-5", "hindu-6", "hindu-7", "hindu-2", "hindu-4"];
+  const popularTemplateIds = ["hindu-4", "hindu-3", "hindu-2", "hindu-1"];
   const popularTemplates = popularTemplateIds
     .map((id) => allTemplates.find((template) => template.id === id))
     .filter((template): template is BiodataTemplate => Boolean(template));
@@ -239,12 +246,12 @@ function LandingHome({
             </div>
             <div className="hero-stats">
               <div><strong>10,000+</strong><span>Bio-datas created</span></div>
-              <div><strong>40</strong><span>Elegant templates</span></div>
+              <div><strong>20</strong><span>Elegant templates</span></div>
               <div><strong>Free</strong><span>PDF download</span></div>
             </div>
           </div>
           <div className="hero-visual">
-            <MiniBiodataCard />
+            <MiniBiodataCard onClick={onOpenHeroTemplate} />
           </div>
         </div>
       </section>
@@ -405,6 +412,18 @@ export default function Home() {
     window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
   }
 
+  function openHeroGoldTemplate() {
+    const goldTemplate =
+      allTemplates.find((template) => template.category === "hindu" && template.name.includes("Gold Ornate Royale")) ??
+      allTemplates.find((template) => template.category === "hindu") ??
+      allTemplates[0];
+
+    setPreviewTemplate(null);
+    setData(createSampleData(goldTemplate.category, goldTemplate.id));
+    setStep("preview");
+    window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+  }
+
   function importData(imported: BiodataFormData) {
     const templateExists = allTemplates.some((template) => template.id === imported.templateId);
     setData({
@@ -473,6 +492,7 @@ export default function Home() {
           onCategorySelect={chooseCategoryAndOpenTemplates}
           onStartCreate={goCreate}
           onOpenPopularTemplates={goPopularTemplates}
+          onOpenHeroTemplate={openHeroGoldTemplate}
           onPreviewTemplate={setPreviewTemplate}
           onUseTemplate={usePopularTemplate}
         />

@@ -1,0 +1,47 @@
+.bio-page.template-floral-blush {
+  padding: 54mm 38mm 22mm;
+}
+
+.bio-page.template-floral-blush .bio-header {
+  margin-bottom: 3mm;
+}
+
+.bio-page.template-floral-blush .bio-invocation {
+  margin: 0 0 2mm;
+  color: var(--bio-primary);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12pt;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.bio-page.template-floral-blush .bio-content {
+  gap: 2.8mm;
+}
+
+.bio-page.template-floral-blush .bio-content,
+.bio-page.template-floral-blush .bio-fields {
+  grid-template-columns: 1fr;
+}
+
+.bio-page.template-floral-blush .bio-fields {
+  gap: 0.9mm;
+}
+
+.bio-page.template-floral-blush .bio-section h2 {
+  margin-bottom: 1.4mm;
+  padding-bottom: 0.9mm;
+}
+
+.bio-page.template-floral-blush .bio-field {
+  gap: 1mm;
+}
+
+.bio-page.template-floral-blush .bio-field dt {
+  line-height: 1.12;
+}
+
+.bio-page.template-floral-blush .bio-field dd {
+  line-height: 1.18;
+}

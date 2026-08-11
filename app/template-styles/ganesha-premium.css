@@ -1,0 +1,30 @@
+.bio-page.template-ganesha-premium {
+  padding: 104mm 38mm 22mm;
+  background:
+    var(--bio-frame-image) center / 98% 98% no-repeat,
+    linear-gradient(180deg, var(--bio-paper) 0%, var(--bio-bg) 100%);
+}
+
+.bio-page.template-ganesha-premium::after {
+  width: 106mm;
+  height: 106mm;
+  opacity: 0.045;
+}
+
+.bio-page.template-ganesha-premium .bio-header {
+  margin-bottom: 4mm;
+}
+
+.bio-page.template-ganesha-premium .bio-mark {
+  width: 10mm;
+  height: 10mm;
+}
+
+.bio-page.template-ganesha-premium .bio-invocation {
+  margin: 0 0 1.5mm;
+}
+
+.bio-page.template-ganesha-premium .bio-content,
+.bio-page.template-ganesha-premium .bio-fields {
+  grid-template-columns: 1fr;
+}

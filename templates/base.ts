@@ -34,42 +34,12 @@ const designSeeds = [
     ornament: "floral"
   },
   {
-    name: "Royal Maroon",
-    description: "Mandala corner artwork with a rich traditional red Ganesha watermark.",
-    theme: { background: "#fff7ed", paper: "#fffaf3", primary: "#7f1d1d", secondary: "#a16207", accent: "#f2c879", text: "#281313", muted: "#76534d" },
-    fontFamily: "Georgia, 'Times New Roman', serif",
-    borderStyle: "ridge 5px #9a3412",
-    layout: "single",
-    headingStyle: "underline",
-    assets: {
-      frame: asset("corner_mandala_gold.png"),
-      watermark: asset("ganesha_floral_red.png"),
-      flourish: asset("ornament_divider_red.png")
-    },
-    ornament: "royal"
-  },
-  {
-    name: "Lotus Pearl",
-    description: "Peacock-inspired corner motif with a subtle minimalist Ganesha watermark.",
-    theme: { background: "#fdf2f8", paper: "#fffefe", primary: "#86198f", secondary: "#a855f7", accent: "#e9d5ff", text: "#2f1734", muted: "#75577c" },
-    fontFamily: "'Palatino Linotype', Georgia, serif",
-    borderStyle: "double 5px #c084fc",
-    layout: "single",
-    headingStyle: "underline",
-    assets: {
-      frame: asset("corner_peacock_motif.png"),
-      watermark: asset("ganesha_minimalist.png"),
-      flourish: asset("ornament_flourish_gold.png")
-    },
-    ornament: "floral"
-  },
-  {
     name: "Gold Ornate Royale",
     description: "Grand golden corner work with a formal biodata body and traditional Ganesha watermark.",
     theme: { background: "#fff7e7", paper: "#fffefa", primary: "#aa7a12", secondary: "#c49a30", accent: "#efd58f", text: "#1f1710", muted: "#6f5a3a" },
     fontFamily: "'Trebuchet MS', Arial, sans-serif",
     borderStyle: "solid 3px #c9971a",
-    layout: "two-column",
+    layout: "single",
     headingStyle: "underline",
     assets: {
       frame: asset("border_royal_gold.png"),
@@ -77,36 +47,6 @@ const designSeeds = [
       flourish: asset("ornament_flourish_gold.png")
     },
     ornament: "gold-ornate"
-  },
-  {
-    name: "Temple Gold Cream",
-    description: "Temple-style golden edge artwork with a mandala Ganesha watermark.",
-    theme: { background: "#fff3e8", paper: "#fff6ee", primary: "#7f1d1d", secondary: "#a16207", accent: "#dfb341", text: "#2a1714", muted: "#765d51" },
-    fontFamily: "Georgia, 'Times New Roman', serif",
-    borderStyle: "solid 2px #dfb341",
-    layout: "two-column",
-    headingStyle: "underline",
-    assets: {
-      frame: asset("corner_mandala_gold.png"),
-      watermark: asset("ganesha_mandala_style.png"),
-      flourish: asset("ornament_flourish_gold.png")
-    },
-    ornament: "temple-gold"
-  },
-  {
-    name: "Dark Floral Resume",
-    description: "Dark premium paper with gold floral border and sketch-style Ganesha watermark.",
-    theme: { background: "#15110f", paper: "#30241f", primary: "#f0d28c", secondary: "#c8a35b", accent: "#f3daa0", text: "#fff8ea", muted: "#e3cda2" },
-    fontFamily: "'Segoe UI', Arial, sans-serif",
-    borderStyle: "solid 2px #d3aa62",
-    layout: "two-column",
-    headingStyle: "underline",
-    assets: {
-      frame: asset("border_royal_gold.png"),
-      watermark: asset("ganesha_sketch_art.png"),
-      flourish: asset("ornament_flourish_gold.png")
-    },
-    ornament: "dark-floral"
   },
   {
     name: "Ganesha Premium",

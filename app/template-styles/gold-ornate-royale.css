@@ -1,0 +1,16 @@
+.bio-page.template-gold-ornate-royale {
+  padding: 40mm 42mm 34mm;
+}
+
+.bio-page.template-gold-ornate-royale .bio-content,
+.bio-page.template-gold-ornate-royale .bio-fields {
+  grid-template-columns: 1fr;
+}
+
+.bio-page.template-gold-ornate-royale .bio-content {
+  padding-inline: 2mm;
+}
+
+.bio-page.template-gold-ornate-royale .bio-section {
+  margin-inline: 1mm;
+}

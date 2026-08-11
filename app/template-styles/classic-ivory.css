@@ -1,0 +1,9 @@
+.bio-page.template-classic-ivory {
+  padding-left: 32mm;
+  padding-right: 32mm;
+}
+
+.bio-page.template-classic-ivory .bio-content,
+.bio-page.template-classic-ivory .bio-fields {
+  grid-template-columns: 1fr;
+}
