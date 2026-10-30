@@ -1,0 +1,790 @@
+/* ==========================================================================
+   Biodata document styles. Everything here is sized in millimetres so the
+   on-screen preview, the rasterised PDF and a printed sheet all match.
+   Colours, fonts, padding and ornaments come in as CSS variables from
+   `components/document/BiodataDocument.tsx`.
+   ========================================================================== */
+
+.bio-document {
+  position: relative;
+  width: 210mm;
+  margin: 0 auto;
+}
+
+.bio-page {
+  position: relative;
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  background: var(--bio-paper);
+  color: var(--bio-ink);
+  font-family: var(--bio-font-body);
+  font-size: 10pt;
+  line-height: 1.38;
+  -webkit-font-smoothing: antialiased;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+  --label-w: 44mm;
+}
+
+.bio-page + .bio-page {
+  margin-top: 8mm;
+}
+
+.bio-page--measure {
+  height: auto;
+  min-height: 297mm;
+}
+
+.bio-measure {
+  position: absolute;
+  top: 0;
+  left: -10000px;
+  width: 210mm;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.bio-page--measure .bio-body {
+  position: relative;
+  inset: auto;
+  margin: 0 var(--pad-right) 0 var(--pad-left);
+}
+
+.bio-page--measure .bio-columns {
+  flex: none;
+}
+
+/* Decoration layers ------------------------------------------------------ */
+.bio-pattern,
+.bio-frame-layer,
+.bio-decor,
+.bio-watermark {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.bio-pattern {
+  z-index: 0;
+  background-image: var(--bio-pattern);
+  opacity: var(--bio-pattern-opacity);
+}
+
+.bio-frame-layer {
+  z-index: 1;
+}
+
+.bio-decor {
+  z-index: 2;
+  background: var(--bio-decor);
+}
+
+.bio-watermark {
+  z-index: 2;
+  background: var(--bio-watermark) center 56% / 112mm auto no-repeat;
+  opacity: var(--bio-watermark-opacity);
+}
+
+/* Body ------------------------------------------------------------------- */
+.bio-body {
+  position: absolute;
+  z-index: 3;
+  top: var(--pad-top);
+  right: var(--pad-right);
+  bottom: var(--pad-bottom);
+  left: var(--pad-left);
+  display: flex;
+  flex-direction: column;
+}
+
+.header-banner.bio-page--continued .bio-body {
+  top: 18mm;
+}
+
+.bio-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 8mm;
+  align-items: start;
+  flex: 1;
+  min-height: 0;
+}
+
+.cols-2 .bio-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.bio-col {
+  display: flex;
+  flex-direction: column;
+  gap: 5.5mm;
+  min-width: 0;
+}
+
+.bio-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+  margin: auto;
+  padding: 20mm;
+  text-align: center;
+  color: var(--bio-muted);
+}
+
+.bio-empty strong {
+  font-family: var(--bio-font-heading);
+  font-size: 15pt;
+  color: var(--bio-primary);
+}
+
+.bio-pagenum {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: calc(var(--pad-bottom) / 2 - 2mm);
+  left: 0;
+  text-align: center;
+  font-size: 7.5pt;
+  letter-spacing: 0.14em;
+  color: var(--bio-muted);
+}
+
+/* Header ----------------------------------------------------------------- */
+.bio-header {
+  position: relative;
+  margin-bottom: 6.5mm;
+  text-align: center;
+}
+
+.bio-invocation {
+  margin: 0 0 3mm;
+  color: var(--bio-secondary);
+  font-size: 12pt;
+  line-height: 1.3;
+}
+
+.script-devanagari {
+  font-family: var(--font-devanagari), "Noto Serif Devanagari", "Mangal", serif;
+  font-weight: 600;
+}
+
+.script-arabic {
+  direction: rtl;
+  font-family: var(--font-arabic), "Amiri", "Scheherazade", "Traditional Arabic", serif;
+  font-size: 15pt;
+  line-height: 1.6;
+}
+
+.script-gurmukhi {
+  font-family: var(--font-gurmukhi), "Noto Sans Gurmukhi", "Raavi", sans-serif;
+  font-weight: 600;
+}
+
+.script-latin {
+  font-family: var(--bio-font-heading);
+  font-style: italic;
+  letter-spacing: 0.06em;
+}
+
+.bio-identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.5mm;
+}
+
+.bio-identity-text {
+  min-width: 0;
+}
+
+.bio-name {
+  margin: 0;
+  font-family: var(--bio-font-heading);
+  font-size: 25pt;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--bio-primary);
+  overflow-wrap: anywhere;
+}
+
+.bio-tagline {
+  margin: 1.6mm 0 0;
+  color: var(--bio-muted);
+  font-size: 8.5pt;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.bio-rule {
+  width: 72mm;
+  height: 6mm;
+  margin: 4mm auto 0;
+  background: var(--bio-rule-image) center / contain no-repeat;
+}
+
+/* Photo */
+.bio-photo {
+  flex: none;
+  width: 34mm;
+  height: 34mm;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1mm solid var(--bio-paper);
+  box-shadow: 0 0 0 0.5mm var(--bio-accent);
+  background: #eee;
+}
+
+.bio-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-rounded .bio-photo {
+  width: 31mm;
+  height: 39mm;
+  border-radius: 2.5mm;
+}
+
+.photo-arch .bio-photo {
+  width: 31mm;
+  height: 41mm;
+  border-radius: 15.5mm 15.5mm 2mm 2mm;
+}
+
+.photo-square .bio-photo {
+  width: 33mm;
+  height: 33mm;
+  border-radius: 1.5mm;
+}
+
+/* Split header: photo on the left, name on the right */
+.header-split .bio-identity {
+  flex-direction: row;
+  align-items: center;
+  gap: 8mm;
+  text-align: left;
+}
+
+.header-split .bio-identity-text {
+  flex: 1;
+}
+
+.header-split .bio-name {
+  font-size: 26pt;
+}
+
+.header-split .bio-rule {
+  width: 100%;
+  height: 0;
+  margin-top: 5mm;
+  border-top: 0.25mm solid var(--bio-line);
+  background: none;
+}
+
+.header-split .bio-invocation {
+  text-align: center;
+}
+
+/* Banner header: the header paints its own band bleeding to the page edges */
+.header-banner .bio-header {
+  margin: calc(-1 * var(--pad-top)) calc(-1 * var(--pad-right)) 7mm calc(-1 * var(--pad-left));
+  padding: 11mm 18mm 9mm;
+  background: var(--bio-band);
+  color: var(--bio-on-band);
+}
+
+.header-banner .bio-identity {
+  flex-direction: row;
+  justify-content: center;
+  gap: 8mm;
+  text-align: left;
+}
+
+.header-banner .bio-identity:has(.bio-photo) .bio-identity-text {
+  flex: 1;
+}
+
+.header-banner .bio-identity:not(:has(.bio-photo)) {
+  text-align: center;
+}
+
+.header-banner .bio-name,
+.header-banner .bio-tagline,
+.header-banner .bio-invocation {
+  color: var(--bio-on-band);
+}
+
+.header-banner .bio-tagline,
+.header-banner .bio-invocation {
+  opacity: 0.85;
+}
+
+.header-banner .bio-photo {
+  border-color: var(--bio-band);
+  box-shadow: 0 0 0 0.7mm var(--bio-accent);
+}
+
+.header-banner .bio-rule {
+  display: none;
+}
+
+.header-banner.bio-page--continued .bio-frame-layer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 7mm;
+  background: var(--bio-band);
+}
+
+/* Sidebar header */
+.bio-side {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: var(--side-w);
+  flex-direction: column;
+  align-items: center;
+  gap: 4mm;
+  padding: 18mm 7mm 14mm;
+  background: var(--bio-band);
+  color: var(--bio-on-band);
+  text-align: center;
+}
+
+.bio-side .bio-photo {
+  width: 40mm;
+  height: 48mm;
+  border-color: var(--bio-band);
+  box-shadow: 0 0 0 0.6mm var(--bio-accent);
+}
+
+.bio-side .bio-name {
+  font-size: 18pt;
+  color: var(--bio-on-band);
+}
+
+.bio-side .bio-tagline {
+  color: var(--bio-on-band);
+  opacity: 0.75;
+}
+
+.bio-side .bio-invocation {
+  color: var(--bio-on-band);
+  opacity: 0.85;
+  font-size: 10pt;
+}
+
+.bio-side-name {
+  margin: 0;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--bio-font-heading);
+  font-size: 12pt;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+.bio-side::after {
+  content: "";
+  margin-top: auto;
+  width: 14mm;
+  height: 0.6mm;
+  background: var(--bio-accent);
+}
+
+/* Sections --------------------------------------------------------------- */
+.bio-section {
+  min-width: 0;
+}
+
+.bio-section h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 2mm;
+  margin: 0 0 2.6mm;
+  font-family: var(--bio-font-heading);
+  font-size: 11.5pt;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--bio-primary);
+}
+
+.bio-continued {
+  font-family: var(--bio-font-body);
+  font-size: 7.5pt;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--bio-muted);
+}
+
+.headings-underline h2 {
+  padding-bottom: 1.3mm;
+  border-bottom: 0.4mm solid var(--bio-accent);
+}
+
+.headings-bar h2 {
+  padding: 1.7mm 3mm;
+  border-left: 1.2mm solid var(--bio-primary);
+  background: var(--bio-primary-tint);
+}
+
+.headings-pill h2 {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 1.5mm 4.5mm;
+  border-radius: 99mm;
+  background: var(--bio-primary);
+  color: var(--bio-paper);
+  font-size: 10pt;
+  letter-spacing: 0.04em;
+}
+
+.headings-pill .bio-continued {
+  color: var(--bio-paper);
+  opacity: 0.75;
+}
+
+.headings-boxed h2 {
+  justify-content: center;
+  padding: 1.6mm 3mm;
+  border: 0.3mm solid var(--bio-primary);
+  font-size: 9.5pt;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.headings-caps h2 {
+  padding-bottom: 1.5mm;
+  border-bottom: 0.25mm solid var(--bio-line);
+  font-family: var(--bio-font-body);
+  font-size: 8.4pt;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bio-secondary);
+}
+
+.headings-ornate h2 {
+  justify-content: center;
+  text-align: center;
+}
+
+.headings-ornate h2::before,
+.headings-ornate h2::after {
+  content: "";
+  flex: 1;
+  height: 0.25mm;
+  background: var(--bio-line);
+  align-self: center;
+}
+
+.headings-ornate h2 > span {
+  position: relative;
+  padding: 0 1mm;
+}
+
+.headings-ornate h2 > span::before {
+  content: "◆";
+  margin-right: 2.2mm;
+  font-size: 6pt;
+  color: var(--bio-accent);
+  vertical-align: 0.6mm;
+}
+
+/* Rows */
+.bio-rows {
+  display: grid;
+  row-gap: 1.7mm;
+  margin: 0;
+}
+
+.bio-row {
+  display: grid;
+  grid-template-columns: var(--label-w) 3mm minmax(0, 1fr);
+  column-gap: 1mm;
+  align-items: baseline;
+}
+
+.bio-row::before {
+  content: ":";
+  grid-column: 2;
+  grid-row: 1;
+  text-align: center;
+  color: var(--bio-muted);
+}
+
+.bio-row dt {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 9pt;
+  font-weight: 600;
+  color: var(--bio-muted);
+  overflow-wrap: anywhere;
+}
+
+.bio-row dd {
+  grid-column: 3;
+  grid-row: 1;
+  margin: 0;
+  font-size: 9.8pt;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.cols-2 {
+  --label-w: 30mm;
+}
+
+.cols-2 .bio-row dt {
+  font-size: 8.5pt;
+}
+
+.cols-2 .bio-row dd {
+  font-size: 9.2pt;
+}
+
+.cols-2 .bio-rows {
+  row-gap: 1.5mm;
+}
+
+.frame-sidebar {
+  --label-w: 38mm;
+}
+
+/* Frames ----------------------------------------------------------------- */
+.frame-image .bio-frame-layer {
+  background: var(--bio-frame-image) center / 100% 100% no-repeat;
+}
+
+.frame-double .bio-frame-layer::before,
+.frame-double .bio-frame-layer::after {
+  content: "";
+  position: absolute;
+  inset: 7mm;
+  border: 0.5mm solid var(--bio-primary);
+}
+
+.frame-double .bio-frame-layer::after {
+  inset: 9.6mm;
+  border-width: 0.2mm;
+  border-color: var(--bio-accent);
+}
+
+.frame-pinline .bio-frame-layer::before {
+  content: "";
+  position: absolute;
+  inset: 8mm;
+  border: 0.28mm solid var(--bio-line);
+}
+
+.frame-band .bio-frame-layer::after,
+.frame-arch .bio-frame-layer::after,
+.frame-garland .bio-frame-layer::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 4mm;
+  background: var(--bio-band);
+  box-shadow: 0 -1.2mm 0 0 var(--bio-paper), 0 -1.9mm 0 0 var(--bio-accent);
+}
+
+.frame-arch .bio-header {
+  border-radius: 0 0 50% 50% / 0 0 16mm 16mm;
+  padding-bottom: 13mm;
+}
+
+.frame-edge .bio-pattern {
+  display: none;
+}
+
+.frame-edge .bio-frame-layer {
+  background: var(--bio-pattern) 0 0 / 12mm 12mm repeat, var(--bio-band);
+}
+
+.frame-edge .bio-frame-layer::after {
+  content: "";
+  position: absolute;
+  inset: 12mm;
+  background: var(--bio-paper);
+  box-shadow: 0 0 0 0.6mm var(--bio-accent), 0 0 0 1.5mm var(--bio-paper);
+}
+
+.frame-stripe .bio-frame-layer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 5mm;
+  background: var(--bio-band);
+}
+
+.frame-stripe .bio-frame-layer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 6.2mm;
+  width: 0.3mm;
+  background: var(--bio-line);
+}
+
+.frame-garland .bio-frame-layer {
+  background: var(--bio-garland) top center / 24mm 18mm repeat-x, linear-gradient(var(--bio-band), var(--bio-band)) top / 100% 2.6mm no-repeat;
+}
+
+.frame-garland .bio-frame-layer::before {
+  content: "";
+  position: absolute;
+  inset: 24mm 8mm 8mm;
+  border: 0.3mm solid var(--bio-line);
+}
+
+/* Dark templates --------------------------------------------------------- */
+.bio-dark .bio-photo {
+  border-color: var(--bio-paper);
+  box-shadow: 0 0 0 0.6mm var(--bio-primary);
+}
+
+.bio-dark .bio-row::before,
+.bio-dark .bio-row dt {
+  color: var(--bio-muted);
+}
+
+.bio-dark.headings-pill h2 {
+  color: var(--bio-paper);
+}
+
+/* Per-template adjustments ---------------------------------------------- */
+.tpl-royal-ganesha .bio-header {
+  margin-bottom: 5mm;
+}
+
+.tpl-royal-ganesha .bio-invocation {
+  color: #8a3a16;
+}
+
+.tpl-royal-ganesha .bio-name {
+  font-size: 22pt;
+}
+
+.tpl-peacock-garden .bio-header {
+  min-height: 44mm;
+  padding: 0 46mm;
+}
+
+.tpl-peacock-garden .bio-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 9mm;
+  border: 0.35mm solid var(--bio-line);
+}
+
+.tpl-peacock-garden .bio-pattern {
+  opacity: 1;
+}
+
+.tpl-mandala-gold .bio-header {
+  padding: 0 26mm;
+}
+
+.tpl-terracotta-rangoli .bio-header {
+  min-height: 34mm;
+  padding: 0 18mm;
+}
+
+.tpl-cathedral-ivory .bio-header {
+  padding: 0 10mm;
+}
+
+.tpl-blush-rose .bio-header {
+  min-height: 40mm;
+  padding: 0 34mm;
+}
+
+.tpl-sage-botanical .bio-header {
+  padding-right: 34mm;
+}
+
+.tpl-ivory-serif .bio-name {
+  font-size: 28pt;
+  letter-spacing: 0.02em;
+}
+
+.tpl-ivory-serif .bio-tagline {
+  letter-spacing: 0.34em;
+}
+
+.tpl-pearl-minimal .bio-name {
+  font-weight: 500;
+}
+
+.header-banner.tpl-saffron-sunrise .bio-header {
+  background-image: linear-gradient(118deg, #f59e0b 0%, #ea580c 55%, #be123c 100%);
+  background-size: auto;
+}
+
+.tpl-saffron-sunrise .bio-frame-layer::after {
+  background: linear-gradient(90deg, #f59e0b, #ea580c 55%, #be123c);
+}
+
+.header-banner .bio-header {
+  background-image: var(--bio-header-pattern);
+  background-size: 16mm 16mm;
+}
+
+.tpl-khalsa-saffron .bio-header {
+  box-shadow: inset 0 -2.4mm 0 0 var(--bio-primary);
+  padding-bottom: 12mm;
+}
+
+.tpl-khalsa-saffron .bio-frame-layer::after {
+  background: var(--bio-primary);
+  box-shadow: 0 -1.2mm 0 0 var(--bio-paper), 0 -1.9mm 0 0 var(--bio-band);
+}
+
+.tpl-midnight-gold .bio-photo,
+.tpl-rosegold-onyx .bio-photo {
+  border-color: var(--bio-paper);
+}
+
+.tpl-slate-executive .bio-side {
+  gap: 5mm;
+}
+
+.tpl-slate-executive .bio-name {
+  letter-spacing: -0.01em;
+}
+
+.tpl-emerald-arabesque .bio-name,
+.tpl-noor-blue .bio-name {
+  font-size: 23pt;
+}
+
+/* Print fallback --------------------------------------------------------- */
+@media print {
+  .bio-page {
+    margin: 0 !important;
+    box-shadow: none;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .bio-measure,
+  .bio-pagenum {
+    display: none;
+  }
+}
